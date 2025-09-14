@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:store_app/core/utils/app_router.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/core/widgets/custom_elevated_button.dart';
 import 'package:store_app/features/auth/presentation/widgets/custom_divider_row.dart';
@@ -23,7 +25,12 @@ class LoginViewBody extends StatelessWidget {
           const SizedBox(height: 48),
           CustomDividerRow(),
           const SizedBox(height: 48),
-          CustomElevatedButton(text: 'Login with Email', onPressed: () {}),
+          CustomElevatedButton(
+            text: 'Login with Email',
+            onPressed: () {
+              GoRouter.of(context).push(AppRouter.kLoginWithEmailView);
+            },
+          ),
           const Spacer(),
           Padding(
             padding: const EdgeInsets.only(top: 16),
