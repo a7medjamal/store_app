@@ -39,7 +39,7 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
                   return 'Please enter your email';
                 }
                 if (!_emailRegex.hasMatch(value)) {
-                  return 'Please enter a valid email';
+                  return 'Please enter valid email address';
                 }
                 return null;
               },
