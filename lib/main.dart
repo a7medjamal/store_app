@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:store_app/core/utils/app_router.dart';
+import 'package:store_app/core/utils/app_colors.dart';
 
 void main() {
   runApp(const StoreApp());
@@ -13,7 +14,10 @@ class StoreApp extends StatelessWidget {
     return MaterialApp.router(
       debugShowCheckedModeBanner: false,
       routerConfig: AppRouter.router,
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+      theme: ThemeData(
+        scaffoldBackgroundColor: AppColors.scaffoldBackground,
+        fontFamily: 'Satoshi',
+      ),
     );
   }
 }
