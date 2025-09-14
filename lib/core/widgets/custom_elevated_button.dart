@@ -5,10 +5,12 @@ import 'package:store_app/core/utils/app_text_styles.dart';
 class CustomElevatedButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
+  final Color? backgroundColor;
   const CustomElevatedButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.backgroundColor,
   });
 
   @override
@@ -17,7 +19,7 @@ class CustomElevatedButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         fixedSize: Size(355, 55),
-        backgroundColor: AppColors.primaryColor,
+        backgroundColor: backgroundColor ?? AppColors.primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       ),
       child: Text(text, style: AppTextStyles.textMediumBold),

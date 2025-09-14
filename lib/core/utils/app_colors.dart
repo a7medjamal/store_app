@@ -5,4 +5,5 @@ class AppColors {
   static const Color white = Colors.white;
   static const Color textGrey = Color(0xFF68656E);
   static const Color scaffoldBackground = Colors.white;
+  static const Color inactiveButtonColor = Color(0xFF6A70FF);
 }
