@@ -85,6 +85,9 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
                             height: 22,
                           ),
                         )),
+            errorStyle: AppTextStyles.textSmallSemiBold.copyWith(
+              color: Colors.red,
+            ),
           ),
         ),
       ],
