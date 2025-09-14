@@ -4,7 +4,6 @@ class AppTextStyles {
   static const TextStyle heading1 = TextStyle(
     fontSize: 32,
     fontWeight: FontWeight.bold,
-    fontFamily: 'Satoshi',
   );
 
   static const TextStyle textLarge = TextStyle(
@@ -30,7 +29,19 @@ class AppTextStyles {
   );
 
   static const TextStyle textSmall = TextStyle(
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: FontWeight.normal,
+    
+  );
+
+  static const TextStyle textSmallSemiBold = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.w600,
+  );
+
+  static const TextStyle textSmallBold = TextStyle(
+    fontSize: 16,
+    fontWeight: FontWeight.bold,
+    color: Colors.black,
   );
 }

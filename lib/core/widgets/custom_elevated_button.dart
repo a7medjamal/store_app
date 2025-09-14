@@ -4,12 +4,17 @@ import 'package:store_app/core/utils/app_text_styles.dart';
 
 class CustomElevatedButton extends StatelessWidget {
   final String text;
-  const CustomElevatedButton({super.key, required this.text});
+  final VoidCallback? onPressed;
+  const CustomElevatedButton({
+    super.key,
+    required this.text,
+    required this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         fixedSize: Size(355, 55),
         backgroundColor: AppColors.primaryColor,
