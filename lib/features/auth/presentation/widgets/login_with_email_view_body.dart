@@ -43,6 +43,7 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
                 }
                 return null;
               },
+              isValid: _isEmailValid,
               onChanged: (value) {
                 setState(() {
                   _isEmailValid =

@@ -1,34 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 
-class CustomTextFormField extends StatelessWidget {
+class CustomTextFormField extends StatefulWidget {
+  final String labelText;
+  final bool obscureText;
+  final String? Function(String?)? validator;
+  final Function(String)? onChanged;
+  final bool? isValid;
+
   const CustomTextFormField({
-    super.key, 
+    super.key,
     required this.labelText,
+    this.obscureText = false,
     this.validator,
     this.onChanged,
-    this.obscureText = false,
+    this.isValid,
   });
 
-  final String labelText;
-  final String? Function(String?)? validator;
-  final void Function(String)? onChanged;
-  final bool obscureText;
+  @override
+  State<CustomTextFormField> createState() => _CustomTextFormFieldState();
+}
+
+class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  late bool _obscureText;
+
+  @override
+  void initState() {
+    super.initState();
+    _obscureText = widget.obscureText;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(labelText, style: AppTextStyles.textSmallSemiBold),
+        Text(widget.labelText, style: AppTextStyles.textSmallSemiBold),
         const SizedBox(height: 6),
         TextFormField(
-          obscureText: obscureText,
-          validator: validator,
-          onChanged: onChanged,
+          obscureText: _obscureText,
+          validator: widget.validator,
+          onChanged: widget.onChanged,
           decoration: InputDecoration(
-            hintText: 'Enter your $labelText',
+            hintText: 'Enter your ${widget.labelText}',
             hintStyle: AppTextStyles.textSmall,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
@@ -38,7 +54,37 @@ class CustomTextFormField extends StatelessWidget {
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: Colors.black),
             ),
-            hoverColor: Colors.black,
+            suffixIcon: widget.obscureText
+                ? IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _obscureText = !_obscureText;
+                      });
+                    },
+                    icon: _obscureText
+                        ? SvgPicture.asset(
+                            'assets/svgs/eye_icon.svg',
+                            width: 18,
+                            height: 18,
+                          )
+                        : SvgPicture.asset(
+                            'assets/svgs/closed_eye_icon.svg',
+                            width: 18,
+                            height: 18,
+                          ),
+                  )
+                : (widget.isValid == null
+                      ? null
+                      : Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: SvgPicture.asset(
+                            widget.isValid!
+                                ? 'assets/svgs/valid_icon.svg'
+                                : 'assets/svgs/unvalid_icon.svg',
+                            width: 22,
+                            height: 22,
+                          ),
+                        )),
           ),
         ),
       ],
