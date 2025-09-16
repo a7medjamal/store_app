@@ -6,6 +6,7 @@ import 'package:store_app/core/utils/app_text_styles.dart';
 class CustomTextFormField extends StatefulWidget {
   final String labelText;
   final bool obscureText;
+  final TextEditingController? controller;
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
   final bool? isValid;
@@ -16,7 +17,7 @@ class CustomTextFormField extends StatefulWidget {
     this.obscureText = false,
     this.validator,
     this.onChanged,
-    this.isValid,
+    this.isValid, this.controller,
   });
 
   @override
@@ -40,6 +41,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         Text(widget.labelText, style: AppTextStyles.textSmallSemiBold),
         const SizedBox(height: 6),
         TextFormField(
+          controller: widget.controller,
           obscureText: _obscureText,
           validator: widget.validator,
           onChanged: widget.onChanged,

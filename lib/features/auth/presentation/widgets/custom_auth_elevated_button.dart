@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 
-class CustomLoginElevatedButton extends StatelessWidget {
+class CustomAuthElevatedButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final String svgPath;
-  const CustomLoginElevatedButton({
+  const CustomAuthElevatedButton({
     super.key,
     required this.text,
     required this.onPressed,

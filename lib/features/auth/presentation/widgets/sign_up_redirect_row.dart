@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
+import 'package:store_app/core/utils/app_router.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 
-class SignupRedirectRow extends StatelessWidget {
-  const SignupRedirectRow({super.key});
+class SignUpRedirectRow extends StatelessWidget {
+  const SignUpRedirectRow({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,9 @@ class SignupRedirectRow extends StatelessWidget {
             alignment: PlaceholderAlignment.baseline,
             baseline: TextBaseline.alphabetic,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                GoRouter.of(context).push(AppRouter.kSignUpView);
+              },
               child: Container(
                 decoration: BoxDecoration(
                   border: Border(

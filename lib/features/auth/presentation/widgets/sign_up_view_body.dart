@@ -4,11 +4,11 @@ import 'package:store_app/core/utils/app_router.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/core/widgets/custom_elevated_button.dart';
 import 'package:store_app/features/auth/presentation/widgets/custom_divider_row.dart';
-import 'package:store_app/features/auth/presentation/widgets/external_login_buttons.dart';
-import 'package:store_app/features/auth/presentation/widgets/sign_up_redirect_row.dart';
+import 'package:store_app/features/auth/presentation/widgets/external_register_buttons.dart';
+import 'package:store_app/features/auth/presentation/widgets/login_redirect_row.dart';
 
-class LoginViewBody extends StatelessWidget {
-  const LoginViewBody({super.key});
+class SignUpViewBody extends StatelessWidget {
+  const SignUpViewBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +19,16 @@ class LoginViewBody extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 50),
-          Text('Login to ShopZen', style: AppTextStyles.heading1),
+          Text('Signup to ShopZen', style: AppTextStyles.heading1),
           const SizedBox(height: 48),
-          ExternalLoginButtons(),
+          ExternalRegisterButtons(),
           const SizedBox(height: 48),
           CustomDividerRow(),
           const SizedBox(height: 48),
           CustomElevatedButton(
-            text: 'Login with Email',
+            text: 'Signup with Email',
             onPressed: () {
-              GoRouter.of(context).push(AppRouter.kLoginWithEmailView);
+              GoRouter.of(context).push(AppRouter.kSignUpWithEmailView);
             },
           ),
           const Spacer(),
@@ -36,7 +36,7 @@ class LoginViewBody extends StatelessWidget {
             padding: const EdgeInsets.only(top: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [SignUpRedirectRow()],
+              children: [LoginRedirectRow()],
             ),
           ),
           const SizedBox(height: 60),
