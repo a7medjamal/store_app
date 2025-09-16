@@ -35,10 +35,11 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
             const SizedBox(height: 48),
             EmailTextFormField(
               validator: (value) {
-                if (value == null || value.isEmpty) {
+                final email = value?.trim() ?? '';
+                if (email.isEmpty) {
                   return 'Please enter your email';
                 }
-                if (!_emailRegex.hasMatch(value)) {
+                if (!_emailRegex.hasMatch(email)) {
                   return 'Please enter valid email address';
                 }
                 return null;
@@ -54,10 +55,11 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
             const SizedBox(height: 16),
             PasswordTextFormField(
               validator: (value) {
-                if (value == null || value.isEmpty) {
+                final password = value?.trim() ?? '';
+                if (password.isEmpty) {
                   return 'Please enter your password';
                 }
-                if (value.length < 8) {
+                if (password.length < 8) {
                   return 'Password must be at least 8 characters';
                 }
                 return null;

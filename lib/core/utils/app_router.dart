@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:store_app/features/auth/presentation/views/forget_pasword_view.dart';
 import 'package:store_app/features/auth/presentation/views/login_view.dart';
 import 'package:store_app/features/auth/presentation/views/login_with_email_view.dart';
 import 'package:store_app/features/auth/presentation/views/sign_up_view.dart';
@@ -11,6 +12,7 @@ abstract class AppRouter {
   static const String kLoginWithEmailView = '/loginWithEmailView';
   static const String kSignUpView = '/signUpView';
   static const String kSignUpWithEmailView = '/signUpWithEmailView';
+  static const String kForgetPasswordView = '/forgetPasswordView';
   static final GoRouter router = GoRouter(
     routes: [
       GoRoute(path: '/', builder: (context, state) => const OnboardingView()),
@@ -18,6 +20,10 @@ abstract class AppRouter {
       GoRoute(
         path: kLoginWithEmailView,
         builder: (context, state) => const LoginWithEmailView(),
+      ),
+      GoRoute(
+        path: kForgetPasswordView,
+        builder: (context, state) => ForgetPasswordView(),
       ),
       GoRoute(
         path: kSignUpView,

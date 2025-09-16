@@ -62,12 +62,13 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
             CustomTextFormField(
               labelText: 'Email',
               validator: (value) {
-                if (value == null || value.isEmpty) {
+                final email = value?.trim() ?? '';
+                if (email.isEmpty) {
                   return 'Email is required';
                 }
                 final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
-                if (!emailRegex.hasMatch(value)) {
-                  return 'Enter a valid email';
+                if (!emailRegex.hasMatch(email)) {
+                  return 'Please enter a valid email address';
                 }
                 return null;
               },
@@ -78,10 +79,11 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
               controller: _passwordController,
               obscureText: true,
               validator: (value) {
-                if (value == null || value.isEmpty) {
+                final password = value?.trim() ?? '';
+                if (password.isEmpty) {
                   return 'Password is required';
                 }
-                if (value.length < 8) {
+                if (password.length < 8) {
                   return 'Password must be at least 8 characters';
                 }
                 return null;
@@ -98,10 +100,11 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
               controller: _confirmPasswordController,
               obscureText: true,
               validator: (value) {
-                if (value == null || value.isEmpty) {
+                final confirmPassword = value?.trim() ?? '';
+                if (confirmPassword.isEmpty) {
                   return 'Confirm your password';
                 }
-                if (value != _passwordController.text) {
+                if (confirmPassword != _passwordController.text) {
                   return 'Passwords do not match';
                 }
                 return null;
@@ -129,7 +132,7 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
                   ? AppColors.primaryColor
                   : AppColors.inactiveButtonColor,
               onPressed: () {
-                if (_formKey.currentState?.validate() == true && _isChecked) {
+                if (_isFormValid && _isChecked) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Form is valid!")),
                   );
