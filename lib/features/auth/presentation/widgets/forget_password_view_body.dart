@@ -64,7 +64,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
             ),
             const SizedBox(height: 48),
             CustomElevatedButton(
-              text: 'Continue',
+              text: !_isFormValid ? 'Continue' : 'Send Code',
               backgroundColor: _isFormValid
                   ? AppColors.primaryColor
                   : AppColors.inactiveButtonColor,
