@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/core/widgets/custom_elevated_button.dart';
+import 'package:store_app/features/auth/presentation/cubit/signup_cubit.dart';
 import 'package:store_app/features/auth/presentation/widgets/custom_checkbox.dart';
 import 'package:store_app/features/auth/presentation/widgets/custom_text_form_field.dart';
 import 'package:store_app/features/auth/presentation/widgets/terms_and_conditions_row.dart';
@@ -20,6 +22,7 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _confirmPasswordController = TextEditingController();
+
   bool _isChecked = false;
   bool _isFormValid = false;
 
@@ -38,14 +41,6 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
     });
   }
 
-  // void _submit() {
-  //   if (_formKey.currentState!.validate()) {
-  //     ScaffoldMessenger.of(
-  //       context,
-  //     ).showSnackBar(const SnackBar(content: Text("Form is valid!")));
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -59,14 +54,18 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
             const SizedBox(height: 60),
             Text('Signup with Email', style: AppTextStyles.textLargeBold),
             const SizedBox(height: 48),
+
+            /// Email
             CustomTextFormField(
               labelText: 'Email',
+              controller: _emailController,
               validator: (value) {
                 final email = value?.trim() ?? '';
                 if (email.isEmpty) {
                   return 'Email is required';
                 }
-                final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                final emailRegex =
+                    RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                 if (!emailRegex.hasMatch(email)) {
                   return 'Please enter a valid email address';
                 }
@@ -92,7 +91,6 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
             Text(
               'Password Minimum of 8 characters',
               style: AppTextStyles.textSmall.copyWith(color: AppColors.green),
-              textAlign: TextAlign.start,
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
@@ -122,21 +120,39 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
                   },
                 ),
                 const SizedBox(width: 8),
-                TermsAndConditionsRow(),
+                const TermsAndConditionsRow(),
               ],
             ),
             const SizedBox(height: 48),
-            CustomElevatedButton(
-              text: 'Signup',
-              backgroundColor: (_isFormValid && _isChecked)
-                  ? AppColors.primaryColor
-                  : AppColors.inactiveButtonColor,
-              onPressed: () {
-                if (_isFormValid && _isChecked) {
+            BlocConsumer<SignUpCubit, SignUpState>(
+              listener: (context, state) {
+                if (state.error != null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Form is valid!")),
+                    SnackBar(content: Text(state.error!)),
+                  );
+                } else if (state.user != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Signup successful!')),
                   );
                 }
+              },
+              builder: (context, state) {
+                return CustomElevatedButton(
+                  text: state.loading ? 'Signing up...' : 'Signup',
+                  backgroundColor: (_isFormValid && _isChecked)
+                      ? AppColors.primaryColor
+                      : AppColors.inactiveButtonColor,
+                  onPressed: (!_isFormValid || !_isChecked || state.loading)
+                      ? null
+                      : () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<SignUpCubit>().signUp(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                );
+                          }
+                        },
+                );
               },
             ),
           ],

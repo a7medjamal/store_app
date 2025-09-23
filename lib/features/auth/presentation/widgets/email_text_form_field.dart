@@ -5,12 +5,14 @@ class EmailTextFormField extends StatelessWidget {
   final Function(String) onChanged;
   final String? Function(String?) validator;
   final bool isValid;
+  final TextEditingController controller;
 
   const EmailTextFormField({
     super.key,
     required this.onChanged,
     required this.validator,
     required this.isValid,
+    required this.controller,
   });
 
   @override

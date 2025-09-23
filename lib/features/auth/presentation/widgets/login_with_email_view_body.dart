@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/core/widgets/custom_elevated_button.dart';
-import 'package:store_app/features/auth/presentation/widgets/email_text_form_field.dart';
+import 'package:store_app/features/auth/presentation/cubit/login_cubit.dart';
+import 'package:store_app/features/auth/presentation/widgets/custom_text_form_field.dart';
 import 'package:store_app/features/auth/presentation/widgets/forget_password_row.dart';
-import 'package:store_app/features/auth/presentation/widgets/password_text_form_field.dart';
 
 class LoginWithEmailViewBody extends StatefulWidget {
   const LoginWithEmailViewBody({super.key});
@@ -15,10 +16,21 @@ class LoginWithEmailViewBody extends StatefulWidget {
 
 class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
   final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+
   bool _isEmailValid = false;
   bool _isPasswordValid = false;
   bool get _isFormValid => _isEmailValid && _isPasswordValid;
+
   final _emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +45,16 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
             const SizedBox(height: 60),
             Text('Login with Email', style: AppTextStyles.textLargeBold),
             const SizedBox(height: 48),
-            EmailTextFormField(
+            CustomTextFormField(
+              labelText: 'Email',
+              controller: _emailController,
               validator: (value) {
                 final email = value?.trim() ?? '';
                 if (email.isEmpty) {
                   return 'Please enter your email';
                 }
                 if (!_emailRegex.hasMatch(email)) {
-                  return 'Please enter valid email address';
+                  return 'Please enter a valid email address';
                 }
                 return null;
               },
@@ -53,7 +67,9 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
               },
             ),
             const SizedBox(height: 16),
-            PasswordTextFormField(
+            CustomTextFormField(
+              labelText: 'Password',
+              controller: _passwordController,
               validator: (value) {
                 final password = value?.trim() ?? '';
                 if (password.isEmpty) {
@@ -71,19 +87,37 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
               },
             ),
             const SizedBox(height: 8),
-            ForgetPasswordRow(),
+            const ForgetPasswordRow(),
             const SizedBox(height: 48),
-            CustomElevatedButton(
-              text: 'Login',
-              backgroundColor: _isFormValid
-                  ? AppColors.primaryColor
-                  : AppColors.inactiveButtonColor,
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
+            BlocConsumer<LoginCubit, LoginState>(
+              listener: (context, state) {
+                if (state.error != null) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Processing login...')),
+                    SnackBar(content: Text(state.error!)),
+                  );
+                } else if (state.user != null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Login successful!')),
                   );
                 }
+              },
+              builder: (context, state) {
+                return CustomElevatedButton(
+                  text: state.loading ? 'Logging in...' : 'Login',
+                  backgroundColor: _isFormValid
+                      ? AppColors.primaryColor
+                      : AppColors.inactiveButtonColor,
+                  onPressed: !_isFormValid || state.loading
+                      ? null
+                      : () {
+                          if (_formKey.currentState!.validate()) {
+                            context.read<LoginCubit>().login(
+                                  _emailController.text.trim(),
+                                  _passwordController.text.trim(),
+                                );
+                          }
+                        },
+                );
               },
             ),
           ],
