@@ -43,6 +43,4 @@ class AppTextStyles {
     fontWeight: FontWeight.bold,
     color: Colors.black,
   );
-
-  
 }

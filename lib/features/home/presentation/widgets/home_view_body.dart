@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/features/home/presentation/widgets/categories_row.dart';
 import 'package:store_app/features/home/presentation/widgets/custom_Search_bar.dart';
 import 'package:store_app/features/home/presentation/widgets/custom_app_bar.dart';
@@ -11,6 +12,7 @@ class HomeViewBody extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(20.0),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 40),
           CustomAppBar(),
@@ -43,6 +45,14 @@ class HomeViewBody extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           CategoriesRow(),
+          const SizedBox(height: 24),
+          Image.asset('assets/images/discount.png'),
+          const SizedBox(height: 24),
+          Text(
+            'Hot Deals',
+            style: AppTextStyles.textSmallBold.copyWith(color: Colors.black),
+            textAlign: TextAlign.left,
+          ),
         ],
       ),
     );
