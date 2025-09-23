@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
+import 'package:store_app/core/utils/app_router.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/core/widgets/custom_elevated_button.dart';
 import 'package:store_app/features/auth/presentation/cubit/signup_cubit.dart';
@@ -64,8 +66,7 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
                 if (email.isEmpty) {
                   return 'Email is required';
                 }
-                final emailRegex =
-                    RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
+                final emailRegex = RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$');
                 if (!emailRegex.hasMatch(email)) {
                   return 'Please enter a valid email address';
                 }
@@ -127,13 +128,14 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
             BlocConsumer<SignUpCubit, SignUpState>(
               listener: (context, state) {
                 if (state.error != null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.error!)),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.error!)));
                 } else if (state.user != null) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Signup successful!')),
                   );
+                  GoRouter.of(context).pushReplacement(AppRouter.kLoginView);
                 }
               },
               builder: (context, state) {
@@ -147,9 +149,12 @@ class _SignUpWithEmailViewBodyState extends State<SignUpWithEmailViewBody> {
                       : () {
                           if (_formKey.currentState!.validate()) {
                             context.read<SignUpCubit>().signUp(
-                                  _emailController.text.trim(),
-                                  _passwordController.text.trim(),
-                                );
+                              _emailController.text.trim(),
+                              _passwordController.text.trim(),
+                            );
+                            GoRouter.of(
+                              context,
+                            ).pushReplacement(AppRouter.kLoginView);
                           }
                         },
                 );

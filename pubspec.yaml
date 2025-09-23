@@ -112,6 +112,53 @@ flutter:
         - asset: assets/fonts/Satoshi/Satoshi-BlackItalic.otf
           weight: 900
           style: italic
+    - family: SFProDisplay
+      fonts:
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-Thin.ttf
+          weight: 100
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-ThinItalic.ttf
+          weight: 100
+          style: italic
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-Ultralight.ttf
+          weight: 200
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-UltralightItalic.ttf
+          weight: 200
+          style: italic
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-Light.ttf
+          weight: 300
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-RegularItalic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-MediumItalic.ttf
+          weight: 500
+          style: italic
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-SemiboldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-Heavy.ttf
+          weight: 800
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-HeavyItalic.ttf
+          weight: 800
+          style: italic
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-Black.ttf
+          weight: 900
+        - asset: assets/fonts/SFProDisplay/SFProDisplay-BlackItalic.ttf
+          weight: 900
+          style: italic
   
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package

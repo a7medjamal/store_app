@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
+import 'package:store_app/core/utils/app_router.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/core/widgets/custom_elevated_button.dart';
 import 'package:store_app/features/auth/presentation/cubit/login_cubit.dart';
@@ -92,13 +94,14 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
             BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 if (state.error != null) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(state.error!)),
-                  );
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text(state.error!)));
                 } else if (state.user != null) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Login successful!')),
                   );
+                  GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
                 }
               },
               builder: (context, state) {
@@ -112,9 +115,12 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
                       : () {
                           if (_formKey.currentState!.validate()) {
                             context.read<LoginCubit>().login(
-                                  _emailController.text.trim(),
-                                  _passwordController.text.trim(),
-                                );
+                              _emailController.text.trim(),
+                              _passwordController.text.trim(),
+                            );
+                            GoRouter.of(
+                              context,
+                            ).pushReplacement(AppRouter.kHomeView);
                           }
                         },
                 );
