@@ -12,16 +12,15 @@ class HomeViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 40),
-            const CustomAppBar(),
-            const SizedBox(height: 16),
-            const CustomSearchBar(),
-            const SizedBox(height: 16),
-            Row(
+      child: CustomScrollView(
+        slivers: [
+          const SliverToBoxAdapter(child: SizedBox(height: 40)),
+          const SliverToBoxAdapter(child: CustomAppBar()),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          const SliverToBoxAdapter(child: CustomSearchBar()),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          SliverToBoxAdapter(
+            child: Row(
               children: [
                 const Text(
                   'Categories',
@@ -45,34 +44,36 @@ class HomeViewBody extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 16),
-            const CategoriesRow(),
-            const SizedBox(height: 24),
-            Image.asset('assets/images/discount.png'),
-            const SizedBox(height: 24),
-            Text(
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          const SliverToBoxAdapter(child: CategoriesRow()),
+          const SliverToBoxAdapter(child: SizedBox(height: 24)),
+          SliverToBoxAdapter(child: Image.asset('assets/images/discount.png')),
+          const SliverToBoxAdapter(child: SizedBox(height: 24)),
+          SliverToBoxAdapter(
+            child: Text(
               'Hot Deals',
               style: AppTextStyles.textSmallBold.copyWith(color: Colors.black),
               textAlign: TextAlign.left,
             ),
-            const SizedBox(height: 16),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.only(bottom: 16),
-              itemCount: 10,
+          ),
+          const SliverToBoxAdapter(child: SizedBox(height: 16)),
+          SliverPadding(
+            padding: const EdgeInsets.only(bottom: 30),
+            sliver: SliverGrid(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => const ItemDetails(),
+                childCount: 10,
+              ),
               gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 220,
+                maxCrossAxisExtent: 240,
                 crossAxisSpacing: 20,
                 mainAxisSpacing: 20,
                 childAspectRatio: 0.66,
               ),
-              itemBuilder: (context, index) {
-                return const ItemDetails();
-              },
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
