@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:store_app/core/utils/app_colors.dart';
+import 'package:store_app/core/utils/app_router.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/core/widgets/custom_elevated_button.dart';
 import 'package:store_app/features/auth/presentation/widgets/custom_text_form_field.dart';
@@ -48,6 +50,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
             ),
             const SizedBox(height: 48),
             CustomTextFormField(
+              borderColor: _isFormValid ? Colors.green : AppColors.textGrey,
               labelText: 'Email',
               controller: _emailController,
               validator: (value) {
@@ -70,9 +73,7 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                   : AppColors.inactiveButtonColor,
               onPressed: () {
                 if (_isFormValid) {
-                  ScaffoldMessenger.of(
-                    context,
-                  ).showSnackBar(const SnackBar(content: Text('Valid email!')));
+                  context.push(AppRouter.kOtpView);
                 }
               },
             ),

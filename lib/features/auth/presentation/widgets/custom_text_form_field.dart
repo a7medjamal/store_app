@@ -10,6 +10,7 @@ class CustomTextFormField extends StatefulWidget {
   final String? Function(String?)? validator;
   final Function(String)? onChanged;
   final bool? isValid;
+  final Color? borderColor;
 
   const CustomTextFormField({
     super.key,
@@ -17,7 +18,9 @@ class CustomTextFormField extends StatefulWidget {
     this.obscureText = false,
     this.validator,
     this.onChanged,
-    this.isValid, this.controller,
+    this.isValid,
+    this.controller,
+    this.borderColor,
   });
 
   @override
@@ -43,6 +46,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
         TextFormField(
           controller: widget.controller,
           obscureText: _obscureText,
+          onFieldSubmitted: widget.onChanged,
           validator: widget.validator,
           onChanged: widget.onChanged,
           decoration: InputDecoration(
@@ -50,11 +54,19 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             hintStyle: AppTextStyles.textSmall,
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide(color: AppColors.textGrey),
+              borderSide: BorderSide(
+                color: widget.borderColor ?? AppColors.textGrey,
+              ),
             ),
             focusedBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
-              borderSide: const BorderSide(color: Colors.black),
+              borderSide: BorderSide(color: widget.borderColor ?? Colors.black),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide(
+                color: widget.borderColor ?? AppColors.textGrey,
+              ),
             ),
             suffixIcon: widget.obscureText
                 ? IconButton(
