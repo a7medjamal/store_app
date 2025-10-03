@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:store_app/core/utils/app_colors.dart';
-import 'package:store_app/core/utils/app_router.dart';
-import 'package:store_app/core/utils/app_text_styles.dart';
 
-class SignUpRedirectRow extends StatelessWidget {
-  const SignUpRedirectRow({super.key});
+class TextWithLinkRow extends StatelessWidget {
+  final String prefixText; // e.g. "Don't have any account yet? "
+  final String linkText; // e.g. "Signup"
+  final VoidCallback onTap;
+  final TextStyle? prefixStyle;
+  final TextStyle? linkStyle;
+  final Color? underlineColor;
+
+  const TextWithLinkRow({
+    super.key,
+    required this.prefixText,
+    required this.linkText,
+    required this.onTap,
+    this.prefixStyle,
+    this.linkStyle,
+    this.underlineColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -13,34 +24,35 @@ class SignUpRedirectRow extends StatelessWidget {
       text: TextSpan(
         children: [
           TextSpan(
-            text: "Don't have any account yet? ",
-            style: AppTextStyles.textSmall.copyWith(
-              color: AppColors.textGrey,
-              fontWeight: FontWeight.w400,
-            ),
+            text: prefixText,
+            style:
+                prefixStyle ??
+                const TextStyle(fontSize: 14, color: Colors.grey),
           ),
           WidgetSpan(
             alignment: PlaceholderAlignment.baseline,
             baseline: TextBaseline.alphabetic,
             child: InkWell(
-              onTap: () {
-                GoRouter.of(context).push(AppRouter.kSignUpView);
-              },
+              onTap: onTap,
               child: Container(
                 decoration: BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: AppColors.primaryColor,
+                      color: underlineColor ?? Colors.blue,
                       width: 1.5,
                     ),
                   ),
                 ),
                 child: Text(
-                  "Signup",
-                  style: AppTextStyles.textSmallBold.copyWith(
-                    color: AppColors.primaryColor,
-                    decoration: TextDecoration.none,
-                  ),
+                  linkText,
+                  style:
+                      linkStyle ??
+                      const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                        decoration: TextDecoration.none,
+                      ),
                 ),
               ),
             ),

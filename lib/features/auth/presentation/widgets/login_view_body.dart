@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:store_app/core/utils/app_colors.dart';
 import 'package:store_app/core/utils/app_router.dart';
 import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/core/widgets/custom_elevated_button.dart';
@@ -36,7 +37,24 @@ class LoginViewBody extends StatelessWidget {
             padding: const EdgeInsets.only(top: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [SignUpRedirectRow()],
+              children: [
+                TextWithLinkRow(
+                  prefixText: "Don't have an account yet? ",
+                  linkText: "Signup",
+                  onTap: () {
+                    GoRouter.of(context).push(AppRouter.kSignUpView);
+                  },
+                  prefixStyle: AppTextStyles.textSmall.copyWith(
+                    color: AppColors.textGrey,
+                    fontWeight: FontWeight.w400,
+                  ),
+                  linkStyle: AppTextStyles.textSmallBold.copyWith(
+                    color: AppColors.primaryColor,
+                    decoration: TextDecoration.none,
+                  ),
+                  underlineColor: AppColors.primaryColor,
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 60),
