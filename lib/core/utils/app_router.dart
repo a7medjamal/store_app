@@ -40,7 +40,13 @@ abstract class AppRouter {
         builder: (context, state) => const SignUpWithEmailView(),
       ),
       GoRoute(path: kHomeView, builder: (context, state) => const HomeView()),
-      GoRoute(path: kOtpView, builder: (context, state) => const OtpView()),
+      GoRoute(
+        path: kOtpView,
+        builder: (context, state) {
+          final email = state.extra as String?;
+          return OtpView(email: email ?? '');
+        },
+      ),
       GoRoute(
         path: kCreateNewPasswordView,
         builder: (context, state) => const CreateNewPasswordView(),

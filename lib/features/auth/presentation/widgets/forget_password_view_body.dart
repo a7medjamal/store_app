@@ -73,7 +73,10 @@ class _ForgetPasswordViewBodyState extends State<ForgetPasswordViewBody> {
                   : AppColors.inactiveButtonColor,
               onPressed: () {
                 if (_isFormValid) {
-                  context.push(AppRouter.kOtpView);
+                  context.push(
+                    AppRouter.kOtpView,
+                    extra: _emailController.text.trim(),
+                  );
                 }
               },
             ),

@@ -120,7 +120,7 @@ class _CreateNewPasswordViewBodyState extends State<CreateNewPasswordViewBody> {
                       content: Text("Password updated successfully!"),
                     ),
                   );
-                  context.pushReplacement(AppRouter.kLoginView);
+                  context.pushReplacement(AppRouter.kLoginWithEmailView);
                 }
               },
             ),

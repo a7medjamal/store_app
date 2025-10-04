@@ -8,7 +8,8 @@ import 'package:store_app/features/auth/presentation/widgets/otp_field.dart';
 import 'package:store_app/features/auth/presentation/widgets/text_with_link_row.dart';
 
 class OtpViewBody extends StatefulWidget {
-  const OtpViewBody({super.key});
+  const OtpViewBody({super.key, required this.email});
+  final String email;
 
   @override
   State<OtpViewBody> createState() => _OtpViewBodyState();
@@ -58,7 +59,7 @@ class _OtpViewBodyState extends State<OtpViewBody> {
           ),
           const SizedBox(height: 10),
           Text(
-            "Enter the 4-digit code that you received on your email(pixelshipon@gmail.com)",
+            "Enter the 4-digit code that you received on your email (${widget.email})",
             style: AppTextStyles.textSmallSemiBold.copyWith(
               color: AppColors.textGrey,
             ),
