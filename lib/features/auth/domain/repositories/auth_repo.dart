@@ -5,6 +5,7 @@ abstract class AuthRepo {
   Future<UserEntity> login({required String email, required String password});
   Future<void> sendOtp({required String email}); 
   Future<void> verifyOtp({required String email, required String otp}); 
+  Future<void> updatePassword({required String email, required String newPassword});
   Future<void> logout();
   UserEntity? getCurrentUser();
 }

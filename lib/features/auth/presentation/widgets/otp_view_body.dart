@@ -102,7 +102,10 @@ class _OtpViewBodyState extends State<OtpViewBody> {
                   ? AppColors.primaryColor
                   : AppColors.inactiveButtonColor,
               onPressed: () {
-                context.push(AppRouter.kCreateNewPasswordView);
+                context.push(
+                  AppRouter.kCreateNewPasswordView,
+                  extra: widget.email,
+                );
               },
             ),
           ),

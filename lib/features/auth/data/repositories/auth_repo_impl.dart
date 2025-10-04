@@ -27,6 +27,11 @@ class AuthRepositoryImpl implements AuthRepo {
   Future<void> verifyOtp({required String email, required String otp}) {
     return remoteDataSource.verifyOtp(email, otp);
   }
+  
+  @override
+  Future<void> updatePassword({required String email, required String newPassword}) {
+    return remoteDataSource.updatePassword(email, newPassword);
+  }
 
   @override
   Future<void> logout() {

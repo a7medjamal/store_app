@@ -49,7 +49,10 @@ abstract class AppRouter {
       ),
       GoRoute(
         path: kCreateNewPasswordView,
-        builder: (context, state) => const CreateNewPasswordView(),
+        builder: (context, state) {
+          final email = state.extra as String?;
+          return CreateNewPasswordView(email: email ?? '');
+        },
       ),
     ],
   );

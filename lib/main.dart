@@ -9,6 +9,7 @@ import 'package:store_app/features/auth/data/datasources/auth_remote_datasource.
 import 'package:store_app/features/auth/data/repositories/auth_repo_impl.dart';
 import 'package:store_app/features/auth/domain/usecases/login_usecase.dart';
 import 'package:store_app/features/auth/domain/usecases/signup_usecase.dart';
+import 'package:store_app/features/auth/domain/usecases/update_password_usecase.dart';
 import 'package:store_app/features/auth/presentation/cubit/login_cubit.dart';
 import 'package:store_app/features/auth/presentation/cubit/signup_cubit.dart';
 import 'package:store_app/firebase_options.dart';
@@ -20,17 +21,18 @@ Future<void> main() async {
   final firebaseAuth = FirebaseAuth.instance;
   final authRemote = AuthRemoteDataSourceImpl(firebaseAuth: firebaseAuth);
   final authRepo = AuthRepositoryImpl(remoteDataSource: authRemote);
+  final updatePasswordUseCase = UpdatePasswordUseCase(authRepo: authRepo);
+
   runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => LoginCubit(LoginUseCase(authRepo)),
-        ),
-        BlocProvider(
-          create: (_) => SignUpCubit(SignUpUseCase(authRepo)),
-        ),
-      ],
-      child: const StoreApp(),
+    MultiRepositoryProvider(
+      providers: [RepositoryProvider.value(value: updatePasswordUseCase)],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (_) => LoginCubit(LoginUseCase(authRepo))),
+          BlocProvider(create: (_) => SignUpCubit(SignUpUseCase(authRepo))),
+        ],
+        child: const StoreApp(),
+      ),
     ),
   );
 }
