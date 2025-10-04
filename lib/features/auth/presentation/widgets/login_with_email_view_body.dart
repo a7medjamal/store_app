@@ -34,6 +34,27 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
     super.dispose();
   }
 
+  void _validateEmail(String value) {
+    setState(() {
+      _isEmailValid = value.isNotEmpty && _emailRegex.hasMatch(value);
+    });
+  }
+
+  void _validatePassword(String value) {
+    setState(() {
+      _isPasswordValid = value.isNotEmpty && value.length >= 8;
+    });
+  }
+
+  void _onLoginPressed(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<LoginCubit>().login(
+        _emailController.text.trim(),
+        _passwordController.text.trim(),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -52,41 +73,29 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
               controller: _emailController,
               validator: (value) {
                 final email = value?.trim() ?? '';
-                if (email.isEmpty) {
-                  return 'Please enter your email';
-                }
+                if (email.isEmpty) return 'Please enter your email';
                 if (!_emailRegex.hasMatch(email)) {
                   return 'Please enter a valid email address';
                 }
                 return null;
               },
               isValid: _isEmailValid,
-              onChanged: (value) {
-                setState(() {
-                  _isEmailValid =
-                      value.isNotEmpty && _emailRegex.hasMatch(value);
-                });
-              },
+              onChanged: _validateEmail,
             ),
             const SizedBox(height: 16),
             CustomTextFormField(
               labelText: 'Password',
               controller: _passwordController,
+              obscureText: true,
               validator: (value) {
                 final password = value?.trim() ?? '';
-                if (password.isEmpty) {
-                  return 'Please enter your password';
-                }
+                if (password.isEmpty) return 'Please enter your password';
                 if (password.length < 8) {
                   return 'Password must be at least 8 characters';
                 }
                 return null;
               },
-              onChanged: (value) {
-                setState(() {
-                  _isPasswordValid = value.isNotEmpty && value.length >= 8;
-                });
-              },
+              onChanged: _validatePassword,
             ),
             const SizedBox(height: 8),
             const ForgetPasswordRow(),
@@ -101,28 +110,19 @@ class _LoginWithEmailViewBodyState extends State<LoginWithEmailViewBody> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Login successful!')),
                   );
-                  GoRouter.of(context).pushReplacement(AppRouter.kHomeView);
+                  context.pushReplacement(AppRouter.kHomeView);
                 }
               },
               builder: (context, state) {
+                final isLoading = state.loading;
                 return CustomElevatedButton(
-                  text: state.loading ? 'Logging in...' : 'Login',
+                  text: isLoading ? 'Logging in...' : 'Login',
                   backgroundColor: _isFormValid
                       ? AppColors.primaryColor
                       : AppColors.inactiveButtonColor,
-                  onPressed: !_isFormValid || state.loading
+                  onPressed: !_isFormValid || isLoading
                       ? null
-                      : () {
-                          if (_formKey.currentState!.validate()) {
-                            context.read<LoginCubit>().login(
-                              _emailController.text.trim(),
-                              _passwordController.text.trim(),
-                            );
-                            GoRouter.of(
-                              context,
-                            ).pushReplacement(AppRouter.kHomeView);
-                          }
-                        },
+                      : () => _onLoginPressed(context),
                 );
               },
             ),

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:store_app/core/services/auth_service.dart';
 import 'package:store_app/features/auth/domain/entities/user_entity.dart';
 import 'package:store_app/features/auth/domain/usecases/login_usecase.dart';
 
@@ -24,13 +25,13 @@ class LoginState {
 
 class LoginCubit extends Cubit<LoginState> {
   final LoginUseCase loginUseCase;
-
-  LoginCubit(this.loginUseCase) : super(const LoginState());
-
+  final AuthService authService;
+  LoginCubit(this.loginUseCase, this.authService) : super(const LoginState());
   Future<void> login(String email, String password) async {
     emit(state.copyWith(loading: true, error: null));
     try {
       final user = await loginUseCase(email, password);
+      await authService.saveUserLoginState(user);
       emit(LoginState(user: user));
     } catch (e) {
       emit(LoginState(error: e.toString()));

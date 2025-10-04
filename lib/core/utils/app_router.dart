@@ -19,7 +19,9 @@ abstract class AppRouter {
   static const String kHomeView = '/homeView';
   static const String kOtpView = '/otpView';
   static const String kCreateNewPasswordView = '/createNewPasswordView';
-  static final GoRouter router = GoRouter(
+  
+  static GoRouter router(String initialRoute) => GoRouter(
+    initialLocation: initialRoute,
     routes: [
       GoRoute(path: '/', builder: (context, state) => const OnboardingView()),
       GoRoute(path: kLoginView, builder: (context, state) => const LoginView()),
