@@ -9,7 +9,6 @@ class TermsAndConditionsRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        
         RichText(
           text: TextSpan(
             children: [

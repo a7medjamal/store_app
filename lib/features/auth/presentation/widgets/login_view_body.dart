@@ -6,7 +6,7 @@ import 'package:store_app/core/utils/app_text_styles.dart';
 import 'package:store_app/core/widgets/custom_elevated_button.dart';
 import 'package:store_app/features/auth/presentation/widgets/custom_divider_row.dart';
 import 'package:store_app/features/auth/presentation/widgets/external_login_buttons.dart';
-import 'package:store_app/features/auth/presentation/widgets/sign_up_redirect_row.dart';
+import 'package:store_app/features/auth/presentation/widgets/text_with_link_row.dart';
 
 class LoginViewBody extends StatelessWidget {
   const LoginViewBody({super.key});

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TextWithLinkRow extends StatelessWidget {
-  final String prefixText; // e.g. "Don't have any account yet? "
-  final String linkText; // e.g. "Signup"
+  final String prefixText;
+  final String linkText;
   final VoidCallback onTap;
   final TextStyle? prefixStyle;
   final TextStyle? linkStyle;
